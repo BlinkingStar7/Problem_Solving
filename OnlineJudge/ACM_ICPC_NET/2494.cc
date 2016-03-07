@@ -1,57 +1,44 @@
-#include <iostream>
-#include <algorithm>
-#include <string>
-#include <vector>
-#include <queue>
-#include <stack>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <cmath>
-#include <utility>
-#include <set>
-#include <map>
-#include <numeric>
+#include <bits/stdc++.h>
 using namespace std;
+#define PI 2*acos(0.0)
+#define INF 1e8
+#define EPSILON 1e-8
+#ifdef DEBUG
+#define DPRINTF(x) printf x
+#else
+#define DPRINTF(x) ;
+#endif
 
-const int MAX = 987654321;
-int From[10001], To[10001], N, D[10001][10];
+typedef pair<int, int> pii;
+typedef pair<int, pair<int, int> > piii;
+typedef vector<int> vi;
+typedef vector<pii> vpii;
+typedef vector<bool> vb;
+typedef vector<string> vs;
+
 int main () {
-	cin >> N;
-	for (int i=0; i<N; ++i)
-		scanf("%1d", From+i);
-	for (int i=0; i<N; ++i)
-		scanf("%1d", To+i);
+	int n, f[10001], t[10001];
+	scanf("%d", &n);
+	for (int i=0; i<n; ++i) scanf("%1d", f+i);
+	for (int i=0; i<n; ++i) scanf("%1d", t+i);
 
-	for (int n=N-1; n>=0; --n) {
-		for (int l=0; l<10; ++l) {
-			int m=MAX, mk = 0;
-			for (int k=0; k<10; ++k) {
-				int cand = D[n+1][(l+k)%10] + k + (From[n]+l+k-To[n]+10)%10;
-				if (cand < m) 
-					m = cand;
-			}
-			D[n][l] = m;
-		}
+	int d[10001][10] = {0}, ans[10001][10];
+
+	for (int i=n-1; i>=0; --i) for (int s=0; s<=9; ++s) {
+		int left = (t[i] - f[i] - s + 20) % 10;
+		int a = left + d[i+1][(s+left)%10], b = 10 - left + d[i+1][s];
+		if (a < b) { d[i][s] = a; ans[i][s] = left;}
+		else { d[i][s] = b; ans[i][s] = -(10-left); }
 	}
-	
-	cout << D[0][0] << endl;
-	
-	int cur = 0;
 
-	for (int i=0; i<N; ++i) {
-		int target = D[i][cur];
-		for (int l=0; l<10; ++l) {
-			if (D[i+1][(cur+l)%10] + l + (From[i]+l+cur-To[i]+10)%10 == target) {
-				int left=l, right=(From[i]+l+cur-To[i]+10)%10;
-				if (left) printf("%d %d\n", i+1, left);
-				if (right) printf("%d %d\n", i+1, -right);
-				cur = (cur+l)%10;
-				break;
-			}
-		}
+	int s = 0;
+	printf("%d\n", d[0][0]);
+	for (int i=0; i<n; ++i) {
+		printf("%d %d\n", i+1, ans[i][s]);
+		if (ans[i][s] > 0) s = (s + ans[i][s]) % 10;
 	}
 
 	return 0;
 }
+
 

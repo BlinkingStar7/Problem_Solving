@@ -17,20 +17,21 @@ typedef vector<bool> vb;
 typedef vector<string> vs;
 
 int main () {
-	int n, l, bef, len, m = 0;
-	scanf("%d%d", &n, &l);
-	scanf("%d%d", &len, &bef);
+	int n; scanf("%d", &n);
+	pii wire[101];
+	for (int i=0; i<n; ++i)
+		scanf("%d%d", &wire[i].first, &wire[i].second);
+	sort(wire, wire+n);
 
-	for (int i=1; i<n; ++i) {
-		int curLen, cur;
-		scanf("%d%d", &curLen, &cur);
-		if (cur != bef) {
-			if ((l-curLen-len)/2 > m) m = (l-curLen-len)/2;
-		}
-		bef = cur; len = curLen;
+	int arr[101], len=0;
+	for (int i=0; i<n; ++i) {
+		int val = wire[i].second;
+		int pos = lower_bound(arr, arr+len, val) - arr;
+		arr[pos] = val;
+		if (pos == len) ++len;
 	}
-
-	printf("%d\n", m);
+	
+	printf("%d\n", n-len);
 	return 0;
 }
 

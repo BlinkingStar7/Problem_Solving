@@ -1,56 +1,50 @@
-#include <iostream>
-#include <algorithm>
-#include <string>
-#include <vector>
-#include <queue>
-#include <stack>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <cmath>
-#include <utility>
-#include <set>
-#include <map>
-#include <numeric>
+#include <bits/stdc++.h>
 using namespace std;
+#define PI 2*acos(0.0)
+#define INF 1e8
+#define EPSILON 1e-8
+#ifdef DEBUG
+#define DPRINTF(x) printf x
+#else
+#define DPRINTF(x) ;
+#endif
 
-int Visited[11], adj[11][11], cnt, Ans[11], K;
-void dfs(int here) {
-	Visited[here] = 1;
-	for (int i=0; i<=K; ++i) {
-		if (!Visited[i] && adj[here][i])
-			dfs(i);
+typedef pair<int, int> pii;
+typedef pair<int, pair<int, int> > piii;
+typedef vector<int> vi;
+typedef vector<pii> vpii;
+typedef vector<bool> vb;
+typedef vector<string> vs;
+
+int n;
+char a[11];
+
+void solve(int start, char toFind, int step) {
+	int num = start, ans[11];
+	for (int i=0; i<=n; ++i) {
+		int len = 0;
+		for (int j=i; j<n; ++j, ++len)
+			if (a[j] == toFind) break;
+		
+		for (int j=len; j>=0; --j) {
+			ans[i+j] = num;
+			num += step;
+		}
+		i += len;
 	}
-	Ans[here] = cnt++;
-}
+	for (int i=0; i<=n; ++i)
+		printf("%d", ans[i]);
+	puts("");
+}		
 
 int main () {
-	cin >> K;
-	for (int i=0; i<K; ++i) {
-		char c;
-		scanf(" %c", &c);
-		if (c == '>') 
-			adj[i][i+1] = 1;
-		else
-			adj[i+1][i] = 1;
-	}
+	scanf("%d", &n); getchar();
+	for (int i=0; i<n; ++i) scanf("%c%*c", a+i);
 
-	cnt = 9-K;
-	for (int i=K; i>=0; --i)
-		if (!Visited[i])
-			dfs(i);
-	for (int i=0; i<=K; ++i)
-		printf("%d", Ans[i]);
-
-	memset(Visited, 0, sizeof(Visited));
-	cnt = 0;
-	puts("");
-	for (int i=0; i<=K; ++i)
-		if (!Visited[i])
-			dfs(i);
-	for (int i=0; i<=K; ++i)
-		printf("%d", Ans[i]);
+	solve(9, '>', -1);
+	solve(0, '<', 1);
 
 	return 0;
 }
+
 

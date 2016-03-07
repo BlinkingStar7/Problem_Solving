@@ -16,21 +16,16 @@ typedef vector<pii> vpii;
 typedef vector<bool> vb;
 typedef vector<string> vs;
 
+const int x = 100000;
+bool dp[3][200001];
 int main () {
-	int n, l, bef, len, m = 0;
-	scanf("%d%d", &n, &l);
-	scanf("%d%d", &len, &bef);
+	scanf("%d", &n);
 
-	for (int i=1; i<n; ++i) {
-		int curLen, cur;
-		scanf("%d%d", &curLen, &cur);
-		if (cur != bef) {
-			if ((l-curLen-len)/2 > m) m = (l-curLen-len)/2;
-		}
-		bef = cur; len = curLen;
-	}
-
-	printf("%d\n", m);
+	for (int i=0; i<n; ++i) {
+		int t; scanf("%d", &t);
+		dp[0][t+x] = true;
+		for (int j=0; j<=2*x; ++j) if (j-t >= -x && j-t <= x)
+			dp[1][j+x] ||= dp[0][j-
 	return 0;
 }
 
