@@ -18,6 +18,9 @@ typedef vector<string> vs;
 
 const int dir[7][4] = {{}, {2, 5, 4, 6}, {3, 5, 1, 6}, {4, 5, 2, 6}, {1, 5, 3, 6}, {3, 4, 1, 2}, {3, 2, 1, 4}};
 
+void dfs(int y, int x, int cur) {
+	ans[cur] = board[y][x];
+	for (int d=0; d<4; ++d)
 int main () {
 	
 	for (int i=0; i<n; ++i)
