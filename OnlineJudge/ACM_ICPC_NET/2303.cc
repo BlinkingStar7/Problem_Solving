@@ -16,29 +16,25 @@ typedef vector<pii> vpii;
 typedef vector<bool> vb;
 typedef vector<string> vs;
 
-int n, m, d[30001] = {}, counter = 2;
-inline bool isSafe(int a) {
-	return a>=0 && a<=30000 && d[a];
-}
 int main () {
-	d[15000] = 1;
+	int n;
 	scanf("%d", &n);
+	int best = -1, ans = -1;
 	for (int i=0; i<n; ++i) {
-		int p;
-		scanf("%d", &p);
-		for (int j=30000; j>=0; --j) if(!d[j]){
-			if (isSafe(j+p) && d[j+p]<counter) d[j] = counter;
-			if (isSafe(j-p) && d[j-p]<counter) d[j] = counter;
-		}
-		++counter;
+		int a[5];
+		for (int j=0; j<5; ++j)
+			scanf("%d", &a[j]);
+		for (int x=0; x<5; ++x)
+			for (int y=x+1; y<5; ++y)
+				for (int z=y+1; z<5; ++z) {
+					int cand = a[x]+a[y]+a[z];
+					if (cand%10 > best) {
+						best = cand%10;
+						ans = i+1;
+					}
+				}
 	}
-	scanf("%d", &m);
-	for (int i=0; i<m; ++i) {
-		int t;
-		scanf("%d", &t);
-		printf("%c ", d[t+15000] ? 'Y' : 'N');
-	}
-
+	printf("%d\n", ans);
 	return 0;
 }
 

@@ -35,10 +35,11 @@ int main () {
 	int befa=0, befb = 0, ans = -INF;
 	for (int i=0; i<a.size(); ++i) {
 		for (int j=0; j<b.size(); ++j) {
-		ans = max (ans, (a[i] - befa)*(b[j] - befb));
-		befb = b[j];
+			ans = max (ans, (a[i] - befa)*(b[j] - befb));
+			befb = b[j];
 		}
 		befa = a[i];
+		befb = 0;
 	}
 
 	printf("%d\n", ans);

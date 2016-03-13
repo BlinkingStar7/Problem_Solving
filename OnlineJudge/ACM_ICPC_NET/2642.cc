@@ -29,6 +29,9 @@ void dfs(int y, int x, int cur) {
 	}
 }
 
+void dfs(int y, int x, int cur) {
+	ans[cur] = board[y][x];
+	for (int d=0; d<4; ++d)
 int main () {
 	
 	for (int i=0; i<6; ++i)
