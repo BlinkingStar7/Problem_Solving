@@ -16,30 +16,27 @@ typedef vector<pii> vpii;
 typedef vector<bool> vb;
 typedef vector<string> vs;
 
+int n, k, cnt, arr[201], memo[201][201][21];
+
+int solve(int a, int b, int to) {
+	if (a == b)	return arr[a] == to ? 0 : 1;
+
+	int &ret = memo[a][b][to];
+	if (ret != -1) return ret;
+
+	ret = 0;
+	for (int x=
 int main () {
-	int n, k, bef = -1, num[21] = {}, ans = 0;
-	scanf("%d%d", &n, &k);
-	stack<int> st;
-
-	for (int i=0; i<n; ++i) {
+	scanf("%d%d",&n,&k);
+	int bef = -1;
+	for (int i=0; i<k; ++i) {
 		int cur; scanf("%d", &cur);
-		if (bef != cur) {
-			if (num[cur]) {
-				while(st.top() != cur) {
-					--num[st.top()];
-					st.pop();
-					++ans;
-				}
-			}
-			else {
-				++num[cur];
-				st.push(cur);
-			}
-			bef = cur;
-		}
+		if (cur != bef) arr[cnt++] = cur;
 	}
-
-	ans += st.size() - 1;
+	memset(memo, -1, sizeof(memo));
+	int ans = INF;
+	for (int i=1; i<=k; ++i)
+		ans = min (ans, solve(0, cnt-1, i));
 	printf("%d\n", ans);
 	return 0;
 }
