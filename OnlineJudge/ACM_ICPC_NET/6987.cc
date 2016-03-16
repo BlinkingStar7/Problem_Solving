@@ -16,12 +16,23 @@ typedef vector<pii> vpii;
 typedef vector<bool> vb;
 typedef vector<string> vs;
 
-bool solve(int cur) {
-	if (cur == 6) return true;
+int score[7][3];
 
-	int &w=score[cur][0], &d=score[cur][1], &l=score[cur][2];
-	for (int opp=0; opp<6; ++opp) if (opp != cur) {
+bool solve(int a, int b) {
+	if (a == 6) return true;
+	if (b == 6) return solve(a+1, a+2);
 
+	for (int i=0; i<3; ++i) {
+		if (score[a][i] && score[b][2-i]) {
+			--score[a][i], --score[b][2-i];
+			if (solve(a, b+1)) return true;
+			++score[a][i], ++score[b][2-i];
+		}
+	}
+	return false;
+}
+		
+	 
 int main () {
 	for (int i=0; i<4; ++i) {
 		bool ans = true;
@@ -33,7 +44,7 @@ int main () {
 			}
 			if (sum != 5) ans = false;
 		}
-		if (ans && solve()) printf("1 ");
+		if (ans && solve(0, 1)) printf("1 ");
 		else printf("0 ");
 	}		
 	return 0;

@@ -17,23 +17,31 @@ typedef vector<bool> vb;
 typedef vector<string> vs;
 
 int main () {
-	int n, k;
-	int a[100001];
+	int n, k, bef = -1, num[21] = {}, ans = 0;
 	scanf("%d%d", &n, &k);
+	stack<int> st;
+
 	for (int i=0; i<n; ++i) {
-        int x,y; scanf("%d.%d", &x,&y);
-        a[i] = 10*x+y;
-    } 
-		
-	sort(a, a+n);
+		int cur; scanf("%d", &cur);
+		if (bef != cur) {
+			if (num[cur]) {
+				while(st.top() != cur) {
+					--num[st.top()];
+					st.pop();
+					++ans;
+				}
+			}
+			else {
+				++num[cur];
+				st.push(cur);
+			}
+			bef = cur;
+		}
+	}
 
-	int sum = 0;
-	for (int i=k; i<n-k; ++i) sum += a[i];
-
-	printf("%.2lf\n", (double)sum/(n-2*k)/10);
-	printf("%.2lf\n", (double)(sum+k*a[k]+k*a[n-k-1])/n/10);
+	ans += st.size() - 1;
+	printf("%d\n", ans);
 	return 0;
 }
-
 
 
