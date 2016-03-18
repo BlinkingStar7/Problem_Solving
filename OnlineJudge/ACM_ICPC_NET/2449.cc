@@ -26,12 +26,13 @@ int solve(int a, int b, int to) {
 
 	ret = INF;
 
-	for (int kk=1; kk<=k; ++kk) 
-		if (kk == k) continue;
-		else ret = min(ret, 1+solve(a, b, kk));
-
 	for (int x=a; x<b; ++x)
 		ret = min(ret, solve(a, x, to) + solve(x+1, b, to));
+
+	for (int kk=1; kk<=k; ++kk) 
+		if (kk == to) continue;
+		else ret = min(ret, 1+solve(a, b, kk));
+
 
 	return ret;
 }
