@@ -24,14 +24,26 @@ int solve(int a, int b, int to) {
 	int &ret = memo[a][b][to];
 	if (ret != -1) return ret;
 
-	ret = 0;
-	for (int x=
+	ret = INF;
+
+	for (int kk=1; kk<=k; ++kk) 
+		if (kk == k) continue;
+		else ret = min(ret, 1+solve(a, b, kk));
+
+	for (int x=a; x<b; ++x)
+		ret = min(ret, solve(a, x, to) + solve(x+1, b, to));
+
+	return ret;
+}
+
+
 int main () {
 	scanf("%d%d",&n,&k);
 	int bef = -1;
-	for (int i=0; i<k; ++i) {
+	for (int i=0; i<n; ++i) {
 		int cur; scanf("%d", &cur);
 		if (cur != bef) arr[cnt++] = cur;
+		bef = cur;
 	}
 	memset(memo, -1, sizeof(memo));
 	int ans = INF;
