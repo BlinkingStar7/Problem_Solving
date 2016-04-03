@@ -9,6 +9,11 @@ using namespace std;
 #define DPRINTF(x) ;
 #endif
 
+<<<<<<< HEAD
+int x[500001], y[500001], p[500001], n, w, h;
+
+inline pos(int ii) {
+=======
 typedef pair<int, int> pii;
 typedef pair<int, pair<int, int> > piii;
 typedef vector<int> vi;
@@ -32,12 +37,19 @@ inline int len(int ii, int jj) {
 }
 
 inline int pos(int ii) {
+>>>>>>> 8f67d05177279c2d36ed0bd4eabed7ba5c6808ed
 	if (x[ii] == 0) return 0;
 	else if (y[ii] == 0) return 1;
 	else if (x[ii] == w) return 2;
 	else return 3;
 }
 
+<<<<<<< HEAD
+inline bool isEdge (int ii) {
+	if (x[ii] == x[(ii+1)%n]
+int main () {
+
+=======
 int main () {
 	scanf("%d%d%d",&w,&h,&n);
 	for (int i=0; i<n; ++i) 
@@ -84,6 +96,7 @@ int main () {
 	if (num == 0) 
 		return printf("1 %lld\n", sum + 2*w + 2*h), 0;
 	else printf("%d %lld\n", num, best);
+>>>>>>> 8f67d05177279c2d36ed0bd4eabed7ba5c6808ed
 	return 0;
 }
 
