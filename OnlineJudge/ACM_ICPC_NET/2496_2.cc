@@ -52,7 +52,7 @@ int main () {
 	}
 	int tx = ax, ty = ay;
 	ax = (tx + ty)/2, ay = (ty - tx)/2;
-	printf("%d %d\n", ax, ay);
+	printf("%d %d\n", min(ax, n), min(ay, m));
 	printf("%d\n", ans);
 
 	return 0;
