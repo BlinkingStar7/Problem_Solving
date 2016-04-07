@@ -16,27 +16,16 @@ typedef vector<pii> vpii;
 typedef vector<bool> vb;
 typedef vector<string> vs;
 
-int adj[5][5], n;
+int a[10000][10000];
 int main () {
-	scanf("%d", &n);
-	for (int i=0; i<5; ++i) for (int j=0; j<5; ++j) adj[i][j] = INF;
-	for (int i=0; i<n; ++i) {
-		int a, b, c;
-		scanf("%d%d%d", &a,&b,&c);
-		adj[a][b] = c;
-		adj[b][a] = c;
-	}
-	
-	for (int k=0; k<5; ++k) for (int i=0; i<5; ++i) for (int j=0; j<5; ++j)
-		adj[i][j] = min(adj[i][j], adj[i][k] + adj[k][j]);
-
-	for (int i=0; i<5; ++i ){
-		for (int j=0; j<5; ++j)
-			printf("%d ", adj[i][j]);
-		puts("");
-	}
-
-	return 0;
+	for (int i=0; i<10000; ++i) for (int j=0; j<10000; ++j)
+		a[i][j] = -2;
+	printf("start\n");
+	for (int i=0; i<10000; ++i) for (int j=0; j<10000; ++j)
+		a[i][j] = -2;
+	printf("end\n");
+	memset(a, -1, sizeof(a));
+	printf("end\n");
 }
 
 
