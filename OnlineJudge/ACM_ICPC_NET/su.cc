@@ -18,11 +18,21 @@ typedef vector<string> vs;
 
 #define MAX 1001
 char A[MAX];
-int n, g[MAX], sa[MAX], k;
+int n, g[MAX], sa[MAX], s[MAX], k;
 
-bool cmp (int a, int b) {
-	return g[a] != g[b] ? g[a] < g[b] : g[a+k] < g[b+k];
+void countingSort(int k) {
+	int c[300]; memset(c, 0, sizeof(c));
+
+	for (int i=0; i<n; ++i)
+		c[i+k < n ? g[i+k] : 0]++;
+	for (int i=1; i<300; ++i)
+		c[i] += c[i-1];
+
+	for (int i=n-1; i>=0; --i)
+		s[--c[sa[i]+k < n ? g[sa[i]+k] : 0]] = sa[i];
+	memcpy (sa, s, n*sizeof(int));
 }
+
 
 void print() {
 	printf("when k = %d\n", k);
@@ -37,8 +47,6 @@ void print() {
 int main () {
 	gets(A);
 	n = strlen(A);
-	A[n++] = '$';
-	A[n] = '\0';
 
 	for (int i=0; i<n; ++i) {
 		sa[i] = i;
@@ -46,15 +54,17 @@ int main () {
 	}
 
 	for (k=1; k<n; k<<=1) {
-		sort(sa, sa+n, cmp);
+		countingSort(k);
+		countingSort(0);
 
 		print();
-
-		int t[MAX];
-		t[sa[0]] = 0;
+		int temp[MAX];
+		temp[sa[0]] = 0;
 		for (int i=1; i<n; ++i)
-			t[sa[i]] = cmp(sa[i-1], sa[i]) ? t[sa[i-1]]+1 : t[sa[i-1]];
-		memcpy(g, t, n*sizeof(int));
+			temp[sa[i]] = (g[sa[i]] == g[sa[i-1]] && g[sa[i]+k] == g[sa[i-1]+k]) ?
+				temp[sa[i-1]] : temp[sa[i-1]]+1;
+		memcpy(g, temp, n*sizeof(int));
+		printf("after regroup\n");
 		print();
 	}
 	return 0;
