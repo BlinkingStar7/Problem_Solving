@@ -1,34 +1,35 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define PI 2*acos(0.0)
-#define INF 1e8
-#define EPSILON 1e-8
-#ifdef DEBUG
-#define DPRINTF(x) printf x
-#else
-#define DPRINTF(x) ;
-#endif
+char str[5001];
+int n, g[5001], gg[5001], sa[5001], lcp[5001], r[5001], k;
+bool cmp (int a, int b) {
+	return g[a] != g[b] ? g[a] < g[b] : g[a+k] < g[b+k];
+}
 
-typedef pair<int, int> pii;
-typedef pair<int, pair<int, int> > piii;
-typedef vector<int> vi;
-typedef vector<pii> vpii;
-typedef vector<bool> vb;
-typedef vector<string> vs;
-
-char s[5001];
-int n, ans, p[5001];
 int main () {
-	gets(s);
-	n = strlen(s);
+	gets(str);
+	n = strlen(str);
 
-	int m = 0;
-	for (int i=1; i<n; ++i) {
-		while (m > 0 && s[m] != s[i]) m = p[m-1];
-		if (s[m] == s[i]) {
-			ans = max(ans, p[i] = ++m);
-			if (m == n) m = p[m-1];
-		}
+	for (int i=0; i<n; ++i) {
+		sa[i] = i;
+		g[i] = str[i];
+	}
+
+	for (k=1; k<n; k<<=1) {
+		sort(sa, sa+n, cmp);
+
+		gg[sa[0]] = 1;
+		for (int i=1; i<n; ++i)
+			gg[sa[i]] = gg[sa[i-1]] + cmp(sa[i-1], sa[i]);
+		memcpy(g, gg, n*sizeof(int));
+		if (g[n-1] == n) break;
+	}
+
+	int ans = 0;
+	for (int i=0; i<n; ++i) r[sa[i]] = i;
+	for (int i=0, k=0; i<n; ++i, k?--k:0) if (r[i]) {
+		while (str[i+k] == str[sa[r[i]-1]+k]) ++k;
+		ans = max(ans, lcp[r[i]] = k);
 	}
 
 	printf("%d\n", ans);
