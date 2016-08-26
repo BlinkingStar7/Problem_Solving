@@ -15,40 +15,41 @@ typedef vector<int> vi;
 typedef vector<pii> vpii;
 typedef vector<bool> vb;
 typedef vector<string> vs;
+typedef long long ll;
+typedef unsigned long long ull;
 
-int pi[1000];
-string H, N;
+int N;
 int main () {
-	cin >> H >> N;
+	bool f = false;
+	while (~scanf("%d ", &N)) {
+		if (!f) f = true;
+		else puts("");
 
-	for (int i=1; i<N.size(); ++i) {
-		int cnt = 0;
-		for (int j=0; i+j<N.size(); ++j)
-			if (N[i+j] == N[j]) {
-				++cnt;
-				pi[(i+j)+1] = max(pi[(i+j)+1], cnt);
-			}
-			else
-				break;
-	}
+		char *B = (char *)malloc((N+1)*sizeof(char));
+		int *F = (int *)malloc((N+1)*sizeof(char));
+		gets(B);
 
-	for (int i=0; i<N.size(); ++i)
-		printf("%s => %s (%d)\n", N.substr(0, i+1).c_str(), N.substr(0, pi[i]).c_str(), pi[i]);
-
-	puts("");
-	puts("");
-
-	int matched = 0, pos = 0;
-	pi[0] = -1;
-	while(pos < H.size()) {
-		while (matched >= 0 && H[pos] != N[matched]) matched = pi[matched];
-		++pos; ++matched;
-		if (matched == N.size()) {
-			printf("found on %d\n", pos-matched);
-			matched = pi[matched];
+		char ch;
+		for (int p=1, m=0; p<N; ++p) {
+			while(m && B[m] != B[p]) m = F[m-1];
+			F[p] = B[m] == B[p] ? ++m : m;
 		}
+
+		int m=0, cur=0;
+		while (scanf("%c", &ch) && ch != '\n') {
+			while (m && B[m] != ch) m = F[m-1];
+			if (B[m] == ch) ++m;
+			if (m == N) {
+				printf("%d\n", cur-N+1);
+				m == 0;
+			}
+			++cur;
+		}
+		free(B);
+		free(F);
 	}
-	
+
+
 	return 0;
 }
 

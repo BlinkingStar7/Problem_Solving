@@ -18,7 +18,19 @@ typedef vector<string> vs;
 typedef long long ll;
 typedef unsigned long long ull;
 
+int N, M, A[1025][1025];
 int main () {
+	scanf("%d%d", &N, &M);
+	for (int i=0; i<N; ++i) for (int j=0; j<N; ++j) {
+		scanf("%d", &A[i+1][j+1]);
+		A[i+1][j+1] += A[i][j+1] + A[i+1][j] - A[i][j];
+	}
+
+	for (int i=0; i<M; ++i) {
+		int x, y, xx, yy;
+		scanf("%d%d%d%d", &x, &y, &xx, &yy);
+		printf("%d\n", A[xx][yy] - A[x-1][yy] - A[xx][y-1] + A[x-1][y-1]);
+	}
 
 	return 0;
 }

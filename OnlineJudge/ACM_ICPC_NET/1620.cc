@@ -16,25 +16,23 @@ typedef vector<pii> vpii;
 typedef vector<bool> vb;
 typedef vector<string> vs;
 
-int m, n;
-bool compo[10001];
-
+int n, m;
+string str[100001];
+map<string, int> mmap;
 int main () {
-	int sum = 0, mmin = -1;
-	scanf("%d%d",&m, &n);
-
-	for (int i=2; i<=n; ++i) {
-		if (!compo[i]) {
-			for (int j=i*i; j<=n; j+=i)
-				compo[j] = true;
-			if (i >= m) {
-				sum += i;
-				if (mmin == -1) mmin = i;
-			}
-		}
+	scanf("%d%d ", &n, &m);
+	for (int i=0; i<n; ++i) {
+		cin >> str[i+1];
+		mmap[str[i+1]] = i+1;
 	}
-	if (mmin == -1) printf("-1\n");
-	else printf("%d\n%d\n", sum, mmin);
+	
+	for (int i=0; i<m; ++i) {
+		string s;
+		cin >> s;
+		if (isdigit(s[0])) cout << str[atoi(s.c_str())] << endl;
+		else cout << mmap[s] << endl;
+	}
+
 	return 0;
 }
 

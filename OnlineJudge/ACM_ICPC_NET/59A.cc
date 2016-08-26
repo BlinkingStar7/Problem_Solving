@@ -15,26 +15,25 @@ typedef vector<int> vi;
 typedef vector<pii> vpii;
 typedef vector<bool> vb;
 typedef vector<string> vs;
-
-int m, n;
-bool compo[10001];
+typedef long long ll;
+typedef unsigned long long ull;
 
 int main () {
-	int sum = 0, mmin = -1;
-	scanf("%d%d",&m, &n);
+	char A[101];
+	int a;
+	gets(A);
 
-	for (int i=2; i<=n; ++i) {
-		if (!compo[i]) {
-			for (int j=i*i; j<=n; j+=i)
-				compo[j] = true;
-			if (i >= m) {
-				sum += i;
-				if (mmin == -1) mmin = i;
-			}
-		}
+	a = strlen(A);
+	int lo=0, hi=0;
+	for (int i=0; i<a; ++i) {
+		if (islower(A[i])) ++lo;
+		else ++hi;
 	}
-	if (mmin == -1) printf("-1\n");
-	else printf("%d\n%d\n", sum, mmin);
+
+	if (lo < hi) for (int i=0; i<a; ++i) A[i] = toupper(A[i]);
+	else for (int i=0; i<a; ++i) A[i] = tolower(A[i]);
+
+	printf("%s\n", A);
 	return 0;
 }
 

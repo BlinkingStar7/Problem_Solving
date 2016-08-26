@@ -16,25 +16,30 @@ typedef vector<pii> vpii;
 typedef vector<bool> vb;
 typedef vector<string> vs;
 
-int m, n;
-bool compo[10001];
-
 int main () {
-	int sum = 0, mmin = -1;
-	scanf("%d%d",&m, &n);
+	int n;
+	scanf("%d", &n);
+	for (int i=0; i<n; ++i) {
+		int nn;
+		char c;
+		scanf("%d %c", &nn, &c);
 
-	for (int i=2; i<=n; ++i) {
-		if (!compo[i]) {
-			for (int j=i*i; j<=n; j+=i)
-				compo[j] = true;
-			if (i >= m) {
-				sum += i;
-				if (mmin == -1) mmin = i;
+		
+		for (int i=0; i<nn; ++i) {
+			if (c == 'C') {
+				char t;
+				scanf(" %c", &t);
+				printf("%d%c", t-'A'+1, i == nn-1 ? '\n' : ' ' );
 			}
+			else {
+				int t;
+				scanf("%d ", &t);
+				printf("%c%c", t+'A'-1, i == nn-1 ? '\n' : ' ' );
+			}
+				
 		}
 	}
-	if (mmin == -1) printf("-1\n");
-	else printf("%d\n%d\n", sum, mmin);
+
 	return 0;
 }
 

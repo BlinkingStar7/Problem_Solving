@@ -15,26 +15,27 @@ typedef vector<int> vi;
 typedef vector<pii> vpii;
 typedef vector<bool> vb;
 typedef vector<string> vs;
-
-int m, n;
-bool compo[10001];
+typedef long long ll;
+typedef unsigned long long ull;
 
 int main () {
-	int sum = 0, mmin = -1;
-	scanf("%d%d",&m, &n);
-
-	for (int i=2; i<=n; ++i) {
-		if (!compo[i]) {
-			for (int j=i*i; j<=n; j+=i)
-				compo[j] = true;
-			if (i >= m) {
-				sum += i;
-				if (mmin == -1) mmin = i;
-			}
+	int a, b, n;
+	scanf("%d%d%d", &a, &b, &n);
+	
+	int bestD2 = 100001, bestV = 1;
+	for (int i=0; i<n; ++i) {
+		int x, y, v;
+		scanf("%d%d%d", &x, &y, &v);
+		v *= v;
+		
+		int tempD2 = (x-a)*(x-a)+(y-b)*(y-b);
+		if (tempD2*bestV < bestD2*v) {
+			bestD2 = tempD2;
+			bestV = v;
 		}
 	}
-	if (mmin == -1) printf("-1\n");
-	else printf("%d\n%d\n", sum, mmin);
+
+	printf("%.12lf\n", sqrt(bestD2)/ sqrt(bestV));
 	return 0;
 }
 

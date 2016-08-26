@@ -16,16 +16,12 @@ typedef vector<pii> vpii;
 typedef vector<bool> vb;
 typedef vector<string> vs;
 
-int a[10000][10000];
 int main () {
-	for (int i=0; i<10000; ++i) for (int j=0; j<10000; ++j)
-		a[i][j] = -2;
-	printf("start\n");
-	for (int i=0; i<10000; ++i) for (int j=0; j<10000; ++j)
-		a[i][j] = -2;
-	printf("end\n");
-	memset(a, -1, sizeof(a));
-	printf("end\n");
+	long long n;
+	scanf("%lld", &n);
+	printf("%lf", (double)n);
+		
+	return 0;
 }
 
 
